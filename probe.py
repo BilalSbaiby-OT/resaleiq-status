@@ -47,10 +47,29 @@ def telegram(text):
 
 import urllib.parse  # noqa: E402
 
-try:
-    prev = json.load(urllib.request.urlopen(PAGES + "/status.json", timeout=15))
-except Exception:
-    prev = {}
+def load_prev():
+    """Previous status.json: live Pages copy first, then the last local copy. Never start from {}
+    when history exists, or one failed fetch wipes the public uptime record (QA RES-90)."""
+    for attempt in range(3):
+        try:
+            return json.load(urllib.request.urlopen(PAGES + "/status.json", timeout=15))
+        except urllib.error.HTTPError as e:
+            if e.code == 404:  # nothing published yet: genuinely a first run
+                break
+        except Exception:
+            pass
+        time.sleep(5)
+    try:
+        return json.load(open("site/status.json"))
+    except Exception:
+        pass
+    if os.environ.get("ALLOW_EMPTY_HISTORY") != "1":
+        print("no previous status.json from Pages or local copy; refusing to publish empty history")
+        sys.exit(2)
+    return {}
+
+
+prev = load_prev()
 prev_c = prev.get("components", {})
 today = now.strftime("%Y-%m-%d")
 out = {"checked_at": now.isoformat(timespec="seconds"), "components": {}, "incidents": prev.get("incidents", [])[:50]}
