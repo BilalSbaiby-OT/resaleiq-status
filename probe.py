@@ -8,7 +8,7 @@ import json, os, sys, time, urllib.request, urllib.error, datetime as dt
 
 BASE = "https://resaleiq.dev"
 CHECKS = [("Website", "/"), ("API health", "/api/health")]
-PAGES = os.environ.get("STATUS_URL", "https://bilalsbaiby-ot.github.io/resaleiq-status")
+PAGES = os.environ.get("STATUS_URL", "https://resaleiq.github.io/resaleiq-status")
 TOKEN, CHAT = os.environ.get("TELEGRAM_BOT_TOKEN", ""), os.environ.get("TELEGRAM_CHAT_ID", "")
 now = dt.datetime.now(dt.timezone.utc)
 
