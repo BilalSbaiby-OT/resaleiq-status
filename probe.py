@@ -41,11 +41,16 @@ def telegram(text):
     data = urllib.parse.urlencode({"chat_id": CHAT, "text": text}).encode()
     try:
         urllib.request.urlopen(f"https://api.telegram.org/bot{TOKEN}/sendMessage", data, timeout=20).read()
+        print("telegram sent")
     except Exception as e:  # never log the URL: it contains the token
         print("telegram send failed:", type(e).__name__)
 
 
 import urllib.parse  # noqa: E402
+
+if len(sys.argv) > 1 and sys.argv[1] == "--test-alert":  # proves the alert path without faking an outage
+    telegram("TEST: Resale IQ status probe alert path works (RES-40)")
+    sys.exit(0)
 
 def load_prev():
     """Previous status.json: live Pages copy first, then the last local copy. Never start from {}
