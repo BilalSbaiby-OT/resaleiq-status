@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>dev.resaleiq.status-probe</string>
+  <key>ProgramArguments</key>
+  <array><string>/Users/bilalsbaiby/work/resale-iq/.claude/bin/with-secrets.sh</string><string>/Users/bilalsbaiby/work/resaleiq-status/bin/run_local.sh</string></array>
+  <key>EnvironmentVariables</key><dict><key>PATH</key><string>/usr/local/bin:/usr/bin:/bin</string><key>HOME</key><string>/Users/bilalsbaiby</string></dict>
+  <key>StartInterval</key><integer>300</integer>
+  <key>RunAtLoad</key><true/>
+  <key>StandardOutPath</key><string>/Users/bilalsbaiby/.resaleiq-status/probe.log</string>
+  <key>StandardErrorPath</key><string>/Users/bilalsbaiby/.resaleiq-status/probe.log</string>
+</dict>
+</plist>
